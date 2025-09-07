@@ -4,3 +4,199 @@
 *:after {
   box-sizing: border-box;
 }
+:root {
+  --colorLine: #0397c4;
+  --colorBlue: #09106d;
+  --colorBlack: #000;
+  --colorWhite: #fff;
+}
+
+/* style for Top header */
+#top-header {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  margin: 3% 5% 0 5%;
+  background-color: var(--colorWhite);
+}
+.siteName a {
+  display: flex;
+  width: 100%;
+  font-size: 2rem;
+  text-decoration: none;
+  padding: 5%;
+  font-weight: bold;
+  white-space: nowrap;
+}
+a {
+  color: var(--colorBlack);
+}
+#tools a {
+  display: flex;
+  width: 100%;
+  font-size: 1rem;
+  text-decoration: none;
+  padding: 5%;
+  white-space: nowrap;
+}
+
+/* Style for navigation*/
+
+#navigation {
+  text-align: center;
+  background-color: var(--colorBlack);
+  padding: 3% 0;
+}
+
+
+#navigation li {
+  display: inline;
+  padding: 3%;
+  font-size: 1rem;
+  color: var(--colorWhite);
+}
+
+/********* MAIN STYLE ************/
+
+#hero-img {
+  max-width: 300px;
+  margin-left: 50px;
+}
+h1 {
+  font-size: x-large;
+}
+
+#hero-text {
+  margin: 30px 3%;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.7);
+  position: absolute;
+  top: 150px;
+  left: 5px;
+  width: 37%;
+  z-index: 10;
+}
+
+#hero-text button {
+  background-position: center;
+  width: 60%;
+  height: 30%;
+  background-color: var(--colorLine);
+  box-shadow: #000 2px 2px 2px;
+}
+
+#hero-text p {
+  font-size: 0.9rem;
+  color: var(--colorLine);
+  text-align: left;
+  margin: 2px;
+}
+#hero-text h3 {
+  font-size: 1rem;
+  color: var(--colorLine);
+  text-align: center;
+  margin: 2px;
+}
+
+/******* CONTAINER FEATURES *********/
+#upgrades {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
+  margin: 0 5%;
+}
+
+#reviews {
+  margin: 0 5%;
+}
+
+#reviews h2 {
+  color: var(--colorBlack);
+  margin: 5% 2% 0 2%;
+}
+
+#reviews li {
+  margin: 5% 2%;
+  list-style-type: disc;
+}
+
+.upgrades-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 55%;
+  background-color: var(--colorLine);
+}
+
+#upgrades p {
+  color: var(--colorBlack);
+  font-size: 1.05rem;
+  text-align: center;
+  margin: 4%;
+}
+
+@media (min-width: 800px) {
+  body {
+    font-family: "Open Sans", sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url("/images/site/small_check.png");
+    background-size: cover;
+  }
+  #navigation {
+    padding: 2% 0;
+  }
+  #navigation li {
+    font-size: 1.5rem;
+    padding: 6%;
+  }
+  #wrapper {
+    width: 90%;
+    background-color: var(--colorWhite);
+    margin: 3% 5%;
+    border: solid 3px var(--colorLine);
+    border-radius: 15px;
+  }
+
+  #hero-img {
+    width: 700px;
+    max-width: 900px;
+    margin-left: 250px;
+  }
+  #hero-text {
+    margin: 150px 3%;
+    left: 150px;
+    width: 25%;
+    z-index: 10;
+    padding: 3%;
+  }
+
+  #hero-text p {
+    font-size: 1.5rem;
+  }
+  #hero-text h3 {
+    font-size: 2rem;
+    text-align: left;
+  }
+  #hero-text button {
+    background-position: center;
+    width: 60%;
+    margin-top: 20px;
+    padding: 5%;
+  }
+  #info {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
+    margin: 0 5%;
+  }
+  #reviews {
+    grid-column: 3/5;
+    grid-row: 1/2;
+  }
+  #upgrades-section {
+    grid-column: 1/3;
+    grid-row: 1/2;
+  }
+}
