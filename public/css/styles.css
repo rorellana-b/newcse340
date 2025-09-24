@@ -47,13 +47,19 @@ a {
   background-color: var(--colorBlack);
   padding: 3% 0;
 }
-
+#navigation ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
 
 #navigation li {
   display: inline;
   padding: 3%;
-  font-size: 1rem;
+}
+#navigation li a {
   color: var(--colorWhite);
+  font-size: 1rem;
 }
 
 /********* MAIN STYLE ************/
@@ -147,9 +153,10 @@ h1 {
   #navigation {
     padding: 2% 0;
   }
-  #navigation li {
+  #navigation li a {
     font-size: 1.5rem;
-    padding: 6%;
+
+    padding: 2%;
   }
   #wrapper {
     width: 90%;
