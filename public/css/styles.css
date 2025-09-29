@@ -198,7 +198,7 @@ h1 {
 }
 
 .error-title {
-  font-size: 3rem ;
+  font-size: 3rem;
   color: #d9534f;
   margin-bottom: 1rem;
 }
@@ -221,6 +221,36 @@ h1 {
 
 .error-button:hover {
   background: #025aa5;
+}
+
+/************************************
+******* VEHICLE DETAILS PAGE ********
+*************************************/
+.vehicle-detail {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 2rem;
+  margin: 0.2rem auto;
+  max-width: 1200px;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+.vehicle-detail img {
+  max-width: 100%;
+  margin: 0;
+  border-radius: 12px;
+  object-fit: cover;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+.vehicle-info p {
+  font-size: 0.9rem;
+  margin: 0 0;
+  line-height: 1.6;
+}
+.vehicle-info strong {
+  font-weight: 700;
+  font-size: large;
 }
 
 @media (min-width: 800px) {
@@ -302,5 +332,26 @@ h1 {
   #inv-display li:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  /************************************
+******* VEHICLE DETAILS PAGE ********
+*************************************/
+  .vehicle-detail {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 2rem;
+  }
+  .vehicle-detail img {
+    max-width: 50%;
+    margin: 0;
+  }
+  .vehicle-info p {
+    font-size: 1.1rem;
+    margin: 0.5rem 0;
+  }
+  .vehicle-info strong {
+    font-weight: 700;
+    font-size: x-large;
   }
 }
