@@ -252,6 +252,55 @@ h1 {
   font-weight: 700;
   font-size: large;
 }
+#messages {
+  color: red;
+  font-size: larger;
+}
+
+/* FORM */
+form {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #0397c4;
+}
+label {
+  display: block;
+  margin-top: 10px;
+}
+input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  box-sizing: border-box;
+}
+button {
+  margin-top: 15px;
+  margin-right: 10px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+#btnShow {
+  background-color: #555;
+  color: #fff;
+  border-radius: 16px;
+  width: 150px;
+}
+p {
+  margin-top: 15px;
+}
+
+input:required {
+  border-right: solid 8px red;
+}
+
+input:required:valid {
+  border-right: solid 8px green;
+}
 
 @media (min-width: 800px) {
   body {
