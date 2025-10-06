@@ -35,4 +35,141 @@ invCont.buildDetailView = async function (req, res, next) {
   });
 };
 
+/* ***************************
+ *  Build Managment view
+ * ************************** */
+invCont.buildManagement = async function (req, res, next) {
+  let nav = await utilities.getNav();
+  res.render("inventory/management", {
+    title: "Inventory Management",
+    nav,
+  });
+};
+
+/*******************************
+ * Build Add inventory View
+ *******************************/
+invCont.buildAddClassificationView = async function (req, res, next) {
+  try {
+    const nav = await utilities.getNav();
+    res.render("inventory/add-classification", {
+      title: "Add Classification to Inventory",
+      nav,
+      // errors: null,
+      // classification_name: "",
+      // flash: null,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/*******************************
+ * Build Add inventory View
+ *******************************/
+invCont.buildAddInventory = async function (req, res, next) {
+  try {
+    const nav = await utilities.getNav();
+    const classificationSelect = await utilities.buildClassificationList();
+    res.render("inventory/add-inventory", {
+      title: "Add Inventory",
+      nav,
+      classificationSelect,
+      errors: null,
+      flash: null,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/*******************************
+ * Process Add Classification
+ *******************************/
+invCont.addClassification = async function (req, res, next) {
+  const { classification_name } = req.body;
+
+  try {
+    // Inserción en BD
+    const regResult = await invModel.registerClassification(
+      classification_name
+    );
+
+    if (regResult) {
+      req.flash(
+        "notice",
+        `Classification "${classification_name}" added successfully.`
+      );
+      const nav = await utilities.getNav();
+      res.status(201).render("inventory/management", {
+        title: "Inventory Management",
+        nav,
+      });
+    } else {
+      const nav = await utilities.getNav();
+      req.flash("notice", "Sorry, the insertion failed.");
+      res.status(500).render("inventory/add-classification", {
+        title: "Add Classification to Inventory",
+        nav,
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Form to add new car to inventory
+invCont.addInventory = async function (req, res, next) {
+  try {
+    const {
+      classification_id,
+      inv_make,
+      inv_model,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_year,
+      inv_miles,
+      inv_color,
+    } = req.body;
+
+    // Insertar en BD
+    const regResult = await invModel.registerInventory({
+      classification_id,
+      inv_make,
+      inv_model,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_year,
+      inv_miles,
+      inv_color,
+    });
+
+    if (regResult) {
+      req.flash(
+        "notice",
+        `Vehicle "${inv_make} ${inv_model}" added successfully.`
+      );
+      const nav = await utilities.getNav();
+      res.status(201).render("inventory/management", {
+        title: "Inventory Management",
+        nav,
+      });
+    } else {
+      const nav = await utilities.getNav();
+      req.flash("notice", "Sorry, the insertion failed.");
+      res.status(500).render("inventory/add-inventory", {
+        title: "Add Inventory",
+        nav,
+        classificationSelect: await utilities.buildClassificationList(),
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = invCont;

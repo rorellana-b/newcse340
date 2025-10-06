@@ -58,6 +58,11 @@ app.use(require("./routes/static"));
 app.get("/", utilities.handleErrors(baseController.buildHome));
 // Inventory routes
 app.use("/inv", require("./routes/inventoryRoute"));
+//add classification route
+app.get("/inv", utilities.handleErrors(inventoryRoute.buildAddClassification));
+//add inventory route
+app.get("/inv", utilities.handleErrors(inventoryRoute.buildAddInventory));
+
 // Index Routes
 app.get("/", (req, res) => {
   res.render("index", {

@@ -3,6 +3,7 @@
  * Unit 4, login view activity
  ****************************/
 const utilities = require("../utilities");
+const bcrypt = require("bcryptjs");
 
 /****************************
  * Deliver login view
@@ -42,11 +43,28 @@ async function registerAccount(req, res) {
     account_password,
   } = req.body;
 
+  // Hash the password before storing
+  let hashedPassword;
+  try {
+    // regular password and cost (salt is generated automatically)
+    hashedPassword = await bcrypt.hashSync(account_password, 10);
+  } catch (error) {
+    req.flash(
+      "notice",
+      "Sorry, there was an error processing the registration."
+    );
+    res.status(500).render("account/register", {
+      title: "Registration",
+      nav,
+      errors: null,
+    });
+  }
+
   const regResult = await accountModel.registerAccount(
     account_firstname,
     account_lastname,
     account_email,
-    account_password
+    hashedPassword
   );
 
   if (regResult) {
