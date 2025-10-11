@@ -18,11 +18,29 @@ router.get(
   utilities.handleErrors(accountController.buildRegister)
 );
 
+router.get(
+  "/",
+  utilities.checkLogin,
+  utilities.handleErrors(accountController.buildAccountManagement)
+);
+
+router.get(
+  "/logged",
+  utilities.handleErrors(accountController.buildAccountManagement)
+);
+
 router.post(
   "/register",
   regValidate.registationRules(),
   regValidate.checkRegData,
   utilities.handleErrors(accountController.registerAccount)
+);
+
+router.post(
+  "/login",
+  regValidate.loginRules(),
+  regValidate.checkLoginData,
+  utilities.handleErrors(accountController.accountLogin)
 );
 
 module.exports = router;

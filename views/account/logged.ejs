@@ -1,0 +1,13 @@
+<h1><%= title %></h1>
+<h2>Welcome logged in.</h2>
+<% if (notice && notice.length > 0) { %>
+  <ul>
+    <% notice.forEach(function(msg) { %>
+      <li><%= msg %></li>
+    <% }) %>
+  </ul>
+<% } %>
+
+<ul>
+    <li><a href="/">Edit Acount Information</a></li>
+</ul>

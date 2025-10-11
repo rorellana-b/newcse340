@@ -4,6 +4,7 @@ const router = new express.Router();
 const invController = require("../controllers/invController");
 const utilities = require("../utilities");
 const invValidate = require("../utilities/inventory-validation");
+const accountController = require("../controllers/accountController");
 
 // Route to build inventory by classification view
 router.get("/type/:classificationId", invController.buildByClassificationId);
@@ -23,6 +24,19 @@ router.get("/", invController.buildManagement);
 
 // Route to build add-clasiffication
 router.get("/add-classification", invController.buildAddClassificationView);
+
+// Account route Unit 5
+router.get(
+  "/",
+  utilities.checkJWTToken,
+  utilities.handleErrors(accountController.buildAccountManagement)
+);
+
+router.get(
+  "/getInventory/:classification_id",
+  utilities.checkJWTToken,
+  utilities.handleErrors(invController.getInventoryJSON)
+);
 
 router.post(
   "/add-classification",

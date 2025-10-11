@@ -76,4 +76,34 @@ validate.checkRegData = async (req, res, next) => {
   next();
 };
 
+/* Login Rules */
+validate.loginRules = () => {
+  return [
+    body("account_email")
+      .trim()
+      .isEmail()
+      .withMessage("Por favor ingrese un correo válido."),
+    body("account_password")
+      .trim()
+      .notEmpty()
+      .withMessage("La contraseña es requerida."),
+  ];
+};
+
+/* Check Login Data */
+validate.checkLoginData = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav();
+    res.render("account/login", {
+      errors,
+      title: "Login",
+      nav,
+      account_email: req.body.account_email,
+    });
+    return;
+  }
+  next();
+};
+
 module.exports = validate;
