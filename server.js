@@ -41,13 +41,33 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+// Middleware for parsing the body of POST requests
+app.use((req, res, next) => {
+  const token = req.cookies?.jwt;
+  if (token) {
+    try {
+      const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+      res.locals.loggedIn = true;
+      res.locals.accountFirstName = decoded.account_firstname;
+      res.locals.type = decoded.account_type;
+    } catch (err) {
+      res.locals.loggedIn = false;
+      res.locals.accountFirstName = null;
+    }
+  } else {
+    res.locals.loggedIn = false;
+    res.locals.accountFirstName = null;
+  }
+  next();
+});
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 //Unit 5 cookie
 app.use(cookieParser());
 
 app.use(utilities.checkJWTToken);
+app.use(utilities.checkLoggedIn);
 
 /* ***********************
  * View Engine and Templates
@@ -68,6 +88,13 @@ app.use("/inv", require("./routes/inventoryRoute"));
 app.get("/inv", utilities.handleErrors(inventoryRoute.buildAddClassification));
 //add inventory route
 app.get("/inv", utilities.handleErrors(inventoryRoute.buildAddInventory));
+//add update account route
+app.get(
+  "/update",
+  utilities.handleErrors(
+    require("./controllers/accountController").buildUpdateView
+  )
+);
 
 // Index Routes
 app.get("/", (req, res) => {

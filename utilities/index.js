@@ -168,4 +168,70 @@ Util.checkLogin = (req, res, next) => {
   }
 };
 
+// Util.checkLoggedIn = (req, res, next) => {
+//   const token = req.cookies.jwt; // save token from cookies
+//   if (!token) {
+//     res.locals.loggedIn = false;
+//     res.locals.account_firstname = null;
+//     return next();
+//   }
+
+//   try {
+//     const payload = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+//     res.locals.loggedIn = true;
+//     res.locals.account_firstname = payload.account_firstname;
+//   } catch (err) {
+//     res.locals.loggedIn = false;
+//     res.locals.account_firstname = null;
+//   }
+
+//   next();
+// };
+
+Util.checkLoggedIn = (req, res, next) => {
+  const token = req.cookies.jwt; // save token from cookies
+  if (!token) {
+    res.locals.loggedIn = false;
+    res.locals.account_firstname = null;
+    res.locals.account_type = null;
+    return next();
+  }
+
+  try {
+    const payload = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+    res.locals.loggedIn = true;
+    res.locals.account_type = payload.account_type;
+    res.locals.account_firstname = payload.account_firstname;
+  } catch (err) {
+    res.locals.loggedIn = false;
+    res.locals.account_firstname = null;
+    res.locals.account_type = null;
+  }
+
+  next();
+};
+
+Util.authorizeAdminOrEmployee = (req, res, next) => {
+  const token = req.cookies.jwt;
+
+  if (!token) {
+    return res.redirect("/account/login");
+  }
+
+  try {
+    const payload = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+
+    if (
+      payload.account_type === "Employee" ||
+      payload.account_type === "Admin"
+    ) {
+      return next();
+    } else {
+      return res.redirect("/account/login");
+    }
+  } catch (err) {
+    return res.redirect("/account/login");
+  }
+};
+
 module.exports = Util;

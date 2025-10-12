@@ -6,11 +6,35 @@ const utilities = require("../utilities");
 const invValidate = require("../utilities/inventory-validation");
 const accountController = require("../controllers/accountController");
 
+router.use(utilities.checkLoggedIn);
+
 // Route to build inventory by classification view
-router.get("/type/:classificationId", invController.buildByClassificationId);
+router.get(
+  "/type/:classificationId",
+  utilities.handleErrors(invController.buildByClassificationId)
+);
 
 // Route to build detail view
-router.get("/detail/:inv_id", invController.buildDetailView);
+router.get(
+  "/detail/:inv_id",
+  utilities.handleErrors(invController.buildDetailView)
+);
+
+/**********************************************/
+//UNIT 5 DELETE
+// Route to deliver the delete confirmation view
+router.get(
+  "/delete/:inv_id",
+  utilities.authorizeAdminOrEmployee,
+  utilities.handleErrors(invController.deleteView)
+);
+/**********************************************/
+// Process the delete controler request
+router.post(
+  "/delete",
+  utilities.authorizeAdminOrEmployee,
+  utilities.handleErrors(invController.deleteItem)
+);
 
 // Route to intentionally generate a server error
 router.get("/trigger-error", (req, res, next) => {
@@ -20,10 +44,18 @@ router.get("/trigger-error", (req, res, next) => {
 });
 
 // Route to build the management view
-router.get("/", invController.buildManagement);
+router.get(
+  "/",
+  utilities.authorizeAdminOrEmployee,
+  utilities.handleErrors(invController.buildManagement)
+);
 
 // Route to build add-clasiffication
-router.get("/add-classification", invController.buildAddClassificationView);
+router.get(
+  "/add-classification",
+  utilities.authorizeAdminOrEmployee,
+  utilities.handleErrors(invController.buildAddClassificationView)
+);
 
 // Account route Unit 5
 router.get(
@@ -40,6 +72,7 @@ router.get(
 
 router.post(
   "/add-classification",
+  utilities.authorizeAdminOrEmployee,
   invValidate.classificationRules(),
   invValidate.checkClassificationData,
   utilities.handleErrors(invController.addClassification) //
@@ -47,12 +80,17 @@ router.post(
 
 router.post(
   "/add-inventory",
+  utilities.authorizeAdminOrEmployee,
   invValidate.inventoryRules(),
   invValidate.checkInventoryData,
   utilities.handleErrors(invController.addInventory) //
 );
 
 // Route to build add-inventory
-router.get("/add-inventory", invController.buildAddInventory);
+router.get(
+  "/add-inventory",
+  utilities.authorizeAdminOrEmployee,
+  utilities.handleErrors(invController.buildAddInventory)
+);
 
 module.exports = router;

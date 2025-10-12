@@ -12,6 +12,12 @@ const regValidate = require("../utilities/account-validation");
 // Deliver login view
 router.get("/login", utilities.handleErrors(accountController.buildLogin));
 
+//Unit 5 account update view
+router.get(
+  "/update",
+  utilities.handleErrors(accountController.buildUpdateView)
+);
+
 // registration route
 router.get(
   "/register",
@@ -42,5 +48,10 @@ router.post(
   regValidate.checkLoginData,
   utilities.handleErrors(accountController.accountLogin)
 );
+
+router.get("/logout", (req, res) => {
+  res.clearCookie("jwt");
+  res.redirect("/");
+});
 
 module.exports = router;

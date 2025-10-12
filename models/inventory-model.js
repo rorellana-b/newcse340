@@ -77,10 +77,23 @@ async function registerInventory(vehicleData) {
     ];
 
     const result = await pool.query(sql, values);
-    return result.rowCount === 1; 
+    return result.rowCount === 1;
   } catch (error) {
     console.error("Error inserting inventory:", error);
     return false;
+  }
+}
+
+/*********************************************
+ * Delete inventory item Unit 5
+ ******************************************/
+async function deleteInventoryItem(inv_id) {
+  try {
+    const sql = "DELETE FROM inventory WHERE inv_id = $1";
+    const data = await pool.query(sql, [inv_id]);
+    return data;
+  } catch (error) {
+    new Error("Sorry, the delete failed.");
   }
 }
 
@@ -90,4 +103,5 @@ module.exports = {
   getVehicleById,
   registerClassification,
   registerInventory,
+  deleteInventoryItem,
 };

@@ -34,7 +34,7 @@ a {
 #tools a {
   display: flex;
   width: 100%;
-  font-size: 1rem;
+  font-size: 0.8rem;
   text-decoration: none;
   padding: 5%;
   white-space: nowrap;
@@ -45,7 +45,7 @@ a {
 #navigation {
   text-align: center;
   background-color: var(--colorBlack);
-  padding: 3% 0;
+  padding: 1% 0;
 }
 #navigation ul {
   list-style: none;
@@ -55,11 +55,11 @@ a {
 
 #navigation li {
   display: inline;
-  padding: 2%;
+  padding: 1%;
 }
 #navigation li a {
   color: var(--colorWhite);
-  font-size: 1rem;
+  font-size: 0.8rem;
 }
 
 /********* MAIN STYLE ************/
@@ -360,6 +360,12 @@ input:required:valid {
     width: 60%;
     margin-top: 20px;
     padding: 5%;
+  }
+  #tools {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
   }
   #info {
     display: grid;

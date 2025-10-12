@@ -31,13 +31,19 @@ async function buildRegister(req, res, next) {
   });
 }
 
-async function buildAccountManagement(req, res, next) {
+/* ****************************************
+ *  Deliver update view
+ * *************************************** */
+async function buildUpdateView(req, res, next) {
   let nav = await utilities.getNav();
-  res.render("account/logged", {
-    title: "Account Management",
+  res.render("account/update", {
+    title: "Update Account",
     nav,
+    account_id: accountData.account_id,
+    first_name: accountData.account_firstname,
+    last_name: accountData.account_lastname,
+    email: accountData.account_email,
     errors: null,
-    notice: req.flash("notice"),
   });
 }
 
@@ -149,10 +155,24 @@ async function accountLogin(req, res) {
   }
 }
 
+async function buildAccountManagement(req, res, next) {
+  let nav = await utilities.getNav();
+  res.render("account/logged", {
+    title: "Account Management",
+    nav,
+    account_type: res.locals.account_type,
+    account_firstname: res.locals.account_firstname,
+    account_id: res.locals.account_id,
+    errors: null,
+    notice: req.flash("notice"),
+  });
+}
+
 module.exports = {
   buildLogin,
   buildRegister,
   registerAccount,
   accountLogin,
   buildAccountManagement,
+  buildUpdateView,
 };
